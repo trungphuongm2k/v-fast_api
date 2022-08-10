@@ -7,6 +7,8 @@ import {
   Response,
   RestBindings,
 } from '@loopback/rest';
+import multer from 'multer';
+import path from 'path';
 import {FILE_UPLOAD_SERVICE} from '../keys';
 import {FileUploadHandler} from '../types';
 
@@ -38,12 +40,29 @@ export class FileUploadController {
     request: Request,
     @inject(RestBindings.Http.RESPONSE) response: Response,
   ): Promise<object> {
+    const destination = path.join(__dirname, '../../public');
+    let fileNameSave = '';
+    const multerOptions: multer.Options = {
+      storage: multer.diskStorage({
+        destination,
+        filename: (req, file, cb) => {
+          const extArray = file.mimetype.split('/');
+          const extension = extArray[extArray.length - 1];
+          fileNameSave =
+            file.originalname.split('.')[0] +
+            '-' +
+            Date.now() +
+            '.' +
+            extension;
+          cb(null, fileNameSave);
+        },
+      }),
+    };
+    const upload = multer(multerOptions);
     return new Promise<object>((resolve, reject) => {
-      this.handler(request, response, (err: unknown) => {
-        if (err) reject(err);
-        else {
-          resolve(FileUploadController.getFilesAndFields(request));
-        }
+      upload.any()(request, response, err => {
+        if (err) return reject(err);
+        resolve(FileUploadController.getFilesAndFields(request, fileNameSave));
       });
     });
   }
@@ -52,7 +71,7 @@ export class FileUploadController {
    * Get files and fields for the request
    * @param request - Http request
    */
-  private static getFilesAndFields(request: Request) {
+  private static getFilesAndFields(request: Request, fileNameSave: string) {
     const uploadedFiles = request.files;
     const mapper = (f: globalThis.Express.Multer.File) => ({
       fieldname: f.fieldname,
@@ -69,6 +88,6 @@ export class FileUploadController {
         files.push(...uploadedFiles[filename].map(mapper));
       }
     }
-    return {files, fields: request.body};
+    return {files, fields: request.body, path: fileNameSave};
   }
 }
