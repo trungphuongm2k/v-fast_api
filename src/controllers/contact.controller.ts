@@ -21,13 +21,13 @@ import {
 import {Contact} from '../models';
 import {ContactRepository} from '../repositories';
 
-@authenticate('jwt')
 export class ContactController {
   constructor(
     @repository(ContactRepository)
     public contactRepository: ContactRepository,
   ) {}
 
+  @authenticate('jwt')
   @post('/contacts')
   @response(200, {
     description: 'Contact model instance',
@@ -76,6 +76,7 @@ export class ContactController {
     return this.contactRepository.find(filter);
   }
 
+  @authenticate('jwt')
   @patch('/contacts')
   @response(200, {
     description: 'Contact PATCH success count',
@@ -112,6 +113,7 @@ export class ContactController {
     return this.contactRepository.findById(id, filter);
   }
 
+  @authenticate('jwt')
   @patch('/contacts/{id}')
   @response(204, {
     description: 'Contact PATCH success',
@@ -130,6 +132,7 @@ export class ContactController {
     await this.contactRepository.updateById(id, contact);
   }
 
+  @authenticate('jwt')
   @put('/contacts/{id}')
   @response(204, {
     description: 'Contact PUT success',
@@ -141,6 +144,7 @@ export class ContactController {
     await this.contactRepository.replaceById(id, contact);
   }
 
+  @authenticate('jwt')
   @del('/contacts/{id}')
   @response(204, {
     description: 'Contact DELETE success',

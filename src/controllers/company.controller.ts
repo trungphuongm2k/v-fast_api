@@ -21,13 +21,13 @@ import {
 import {Company} from '../models';
 import {CompanyRepository} from '../repositories';
 
-@authenticate('jwt')
 export class CompanyController {
   constructor(
     @repository(CompanyRepository)
     public companyRepository: CompanyRepository,
   ) {}
 
+  @authenticate('jwt')
   @post('/companies')
   @response(200, {
     description: 'Company model instance',
@@ -76,6 +76,7 @@ export class CompanyController {
     return this.companyRepository.find(filter);
   }
 
+  @authenticate('jwt')
   @patch('/companies')
   @response(200, {
     description: 'Company PATCH success count',
@@ -112,6 +113,7 @@ export class CompanyController {
     return this.companyRepository.findById(id, filter);
   }
 
+  @authenticate('jwt')
   @patch('/companies/{id}')
   @response(204, {
     description: 'Company PATCH success',
@@ -130,6 +132,7 @@ export class CompanyController {
     await this.companyRepository.updateById(id, company);
   }
 
+  @authenticate('jwt')
   @put('/companies/{id}')
   @response(204, {
     description: 'Company PUT success',
@@ -141,6 +144,7 @@ export class CompanyController {
     await this.companyRepository.replaceById(id, company);
   }
 
+  @authenticate('jwt')
   @del('/companies/{id}')
   @response(204, {
     description: 'Company DELETE success',

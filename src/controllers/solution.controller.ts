@@ -21,13 +21,13 @@ import {
 import {Solution} from '../models';
 import {SolutionRepository} from '../repositories';
 
-@authenticate('jwt')
 export class SolutionController {
   constructor(
     @repository(SolutionRepository)
     public solutionRepository: SolutionRepository,
   ) {}
 
+  @authenticate('jwt')
   @post('/solutions')
   @response(200, {
     description: 'Solution model instance',
@@ -76,6 +76,7 @@ export class SolutionController {
     return this.solutionRepository.find(filter);
   }
 
+  @authenticate('jwt')
   @patch('/solutions')
   @response(200, {
     description: 'Solution PATCH success count',
@@ -112,6 +113,7 @@ export class SolutionController {
     return this.solutionRepository.findById(id, filter);
   }
 
+  @authenticate('jwt')
   @patch('/solutions/{id}')
   @response(204, {
     description: 'Solution PATCH success',
@@ -130,6 +132,7 @@ export class SolutionController {
     await this.solutionRepository.updateById(id, solution);
   }
 
+  @authenticate('jwt')
   @put('/solutions/{id}')
   @response(204, {
     description: 'Solution PUT success',
@@ -141,6 +144,7 @@ export class SolutionController {
     await this.solutionRepository.replaceById(id, solution);
   }
 
+  @authenticate('jwt')
   @del('/solutions/{id}')
   @response(204, {
     description: 'Solution DELETE success',

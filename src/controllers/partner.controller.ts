@@ -21,13 +21,13 @@ import {
 import {Partner} from '../models';
 import {PartnerRepository} from '../repositories';
 
-@authenticate('jwt')
 export class PartnerController {
   constructor(
     @repository(PartnerRepository)
     public partnerRepository: PartnerRepository,
   ) {}
 
+  @authenticate('jwt')
   @post('/partners')
   @response(200, {
     description: 'Partner model instance',
@@ -76,6 +76,7 @@ export class PartnerController {
     return this.partnerRepository.find(filter);
   }
 
+  @authenticate('jwt')
   @patch('/partners')
   @response(200, {
     description: 'Partner PATCH success count',
@@ -112,6 +113,7 @@ export class PartnerController {
     return this.partnerRepository.findById(id, filter);
   }
 
+  @authenticate('jwt')
   @patch('/partners/{id}')
   @response(204, {
     description: 'Partner PATCH success',
@@ -130,6 +132,7 @@ export class PartnerController {
     await this.partnerRepository.updateById(id, partner);
   }
 
+  @authenticate('jwt')
   @put('/partners/{id}')
   @response(204, {
     description: 'Partner PUT success',
@@ -141,6 +144,7 @@ export class PartnerController {
     await this.partnerRepository.replaceById(id, partner);
   }
 
+  @authenticate('jwt')
   @del('/partners/{id}')
   @response(204, {
     description: 'Partner DELETE success',

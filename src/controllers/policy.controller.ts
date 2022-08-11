@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -7,13 +8,13 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  param,
   patch,
+  post,
   put,
-  del,
   requestBody,
   response,
 } from '@loopback/rest';
@@ -23,9 +24,10 @@ import {PolicyRepository} from '../repositories';
 export class PolicyController {
   constructor(
     @repository(PolicyRepository)
-    public policyRepository : PolicyRepository,
+    public policyRepository: PolicyRepository,
   ) {}
 
+  @authenticate('jwt')
   @post('/policies')
   @response(200, {
     description: 'Policy model instance',
@@ -52,9 +54,7 @@ export class PolicyController {
     description: 'Policy model count',
     content: {'application/json': {schema: CountSchema}},
   })
-  async count(
-    @param.where(Policy) where?: Where<Policy>,
-  ): Promise<Count> {
+  async count(@param.where(Policy) where?: Where<Policy>): Promise<Count> {
     return this.policyRepository.count(where);
   }
 
@@ -70,12 +70,11 @@ export class PolicyController {
       },
     },
   })
-  async find(
-    @param.filter(Policy) filter?: Filter<Policy>,
-  ): Promise<Policy[]> {
+  async find(@param.filter(Policy) filter?: Filter<Policy>): Promise<Policy[]> {
     return this.policyRepository.find(filter);
   }
 
+  @authenticate('jwt')
   @patch('/policies')
   @response(200, {
     description: 'Policy PATCH success count',
@@ -106,11 +105,13 @@ export class PolicyController {
   })
   async findById(
     @param.path.string('id') id: string,
-    @param.filter(Policy, {exclude: 'where'}) filter?: FilterExcludingWhere<Policy>
+    @param.filter(Policy, {exclude: 'where'})
+    filter?: FilterExcludingWhere<Policy>,
   ): Promise<Policy> {
     return this.policyRepository.findById(id, filter);
   }
 
+  @authenticate('jwt')
   @patch('/policies/{id}')
   @response(204, {
     description: 'Policy PATCH success',
@@ -129,6 +130,7 @@ export class PolicyController {
     await this.policyRepository.updateById(id, policy);
   }
 
+  @authenticate('jwt')
   @put('/policies/{id}')
   @response(204, {
     description: 'Policy PUT success',
@@ -140,6 +142,7 @@ export class PolicyController {
     await this.policyRepository.replaceById(id, policy);
   }
 
+  @authenticate('jwt')
   @del('/policies/{id}')
   @response(204, {
     description: 'Policy DELETE success',

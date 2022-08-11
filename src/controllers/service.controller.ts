@@ -21,13 +21,13 @@ import {
 import {Service} from '../models';
 import {ServiceRepository} from '../repositories';
 
-@authenticate('jwt')
 export class ServiceController {
   constructor(
     @repository(ServiceRepository)
     public serviceRepository: ServiceRepository,
   ) {}
 
+  @authenticate('jwt')
   @post('/services')
   @response(200, {
     description: 'Service model instance',
@@ -76,6 +76,7 @@ export class ServiceController {
     return this.serviceRepository.find(filter);
   }
 
+  @authenticate('jwt')
   @patch('/services')
   @response(200, {
     description: 'Service PATCH success count',
@@ -112,6 +113,7 @@ export class ServiceController {
     return this.serviceRepository.findById(id, filter);
   }
 
+  @authenticate('jwt')
   @patch('/services/{id}')
   @response(204, {
     description: 'Service PATCH success',
@@ -130,6 +132,7 @@ export class ServiceController {
     await this.serviceRepository.updateById(id, service);
   }
 
+  @authenticate('jwt')
   @put('/services/{id}')
   @response(204, {
     description: 'Service PUT success',
@@ -141,6 +144,7 @@ export class ServiceController {
     await this.serviceRepository.replaceById(id, service);
   }
 
+  @authenticate('jwt')
   @del('/services/{id}')
   @response(204, {
     description: 'Service DELETE success',
