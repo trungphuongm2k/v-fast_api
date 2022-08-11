@@ -75,7 +75,6 @@ export class CompanyController {
   ): Promise<Company[]> {
     return this.companyRepository.find(filter);
   }
-
   @authenticate('jwt')
   @patch('/companies')
   @response(200, {
@@ -112,7 +111,6 @@ export class CompanyController {
   ): Promise<Company> {
     return this.companyRepository.findById(id, filter);
   }
-
   @authenticate('jwt')
   @patch('/companies/{id}')
   @response(204, {
@@ -131,7 +129,6 @@ export class CompanyController {
   ): Promise<void> {
     await this.companyRepository.updateById(id, company);
   }
-
   @authenticate('jwt')
   @put('/companies/{id}')
   @response(204, {
@@ -143,7 +140,6 @@ export class CompanyController {
   ): Promise<void> {
     await this.companyRepository.replaceById(id, company);
   }
-
   @authenticate('jwt')
   @del('/companies/{id}')
   @response(204, {

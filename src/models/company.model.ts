@@ -14,6 +14,32 @@ export class Company extends Entity {
   })
   name?: string;
 
+  @property({
+    type: 'string',
+  })
+  logo?: string;
+
+  @property({
+    type: 'string',
+  })
+  motto?: string;
+
+  @property({
+    type: 'string',
+  })
+  mottotitle?: string;
+
+  @property({
+    type: 'array',
+    itemType: 'string',
+  })
+  mottolist?: string[];
+
+  @property({
+    type: 'string',
+  })
+  description?: string;
+
 
   constructor(data?: Partial<Company>) {
     super(data);
