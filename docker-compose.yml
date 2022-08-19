@@ -9,6 +9,9 @@ services:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: abcd1234
       MONGO_INITDB_DATABASE: vfastadmin
+    volumes:
+      - ./data/db:/data/db
+      - ./create-script.sh:/docker-entrypoint-initdb.d/create-script.sh
 
   backend:
     container_name: vfastsoft_be
@@ -22,8 +25,5 @@ services:
       - DB_MONGO_NAME=vfastadmin # giống phía trên
       - DB_MONGO_USER=root # mặc định là root
       - DB_MONGO_PASSWORD=abcd1234 # giống phía trên
-    volumes:
-      - ./data/db:/data/db
-      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
     depends_on:
       - mongo

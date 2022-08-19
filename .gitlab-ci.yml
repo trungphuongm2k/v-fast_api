@@ -59,7 +59,6 @@ deploy:
     - >
       ssh $SSH_USER@$SSH_SERVER_IP -p $SSH_PORT
       "cd $PROJECT_PATH;
-      docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-      docker-compose pull;
+      docker-compose pull $$CI_REGISTRY_IMAGE:latest;
       docker-compose up -d;
       docker image prune -f;"
