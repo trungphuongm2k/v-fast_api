@@ -40,7 +40,6 @@ export class Company extends Entity {
   })
   description?: string;
 
-
   constructor(data?: Partial<Company>) {
     super(data);
   }

@@ -24,7 +24,6 @@ export class Service extends Entity {
   })
   description?: string;
 
-
   constructor(data?: Partial<Service>) {
     super(data);
   }

@@ -24,7 +24,6 @@ export class Partner extends Entity {
   })
   url?: string;
 
-
   constructor(data?: Partial<Partner>) {
     super(data);
   }

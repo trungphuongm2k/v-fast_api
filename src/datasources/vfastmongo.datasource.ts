@@ -4,7 +4,7 @@ const config = {
   name: 'vfastmongo',
   connector: 'mongodb',
   host: process.env.DB_MONGO_HOST,
-  port: parseInt(process.env.DB_MONGO_PORT || '27017'),
+  port: parseInt(process.env.DB_MONGO_PORT ?? '27017'),
   user: process.env.DB_MONGO_USER,
   password: process.env.DB_MONGO_PASSWORD,
   database: process.env.DB_MONGO_DATABASE,
