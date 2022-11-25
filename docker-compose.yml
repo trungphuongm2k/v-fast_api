@@ -19,6 +19,7 @@ services:
     ports:
       - '20011:3000'
     environment:
+      - FOLDER_UPLOAD=public
       # DB Config
       - DB_MONGO_HOST=mongo # `mongo` là tên của service mysql phía trên
       - DB_MONGO_PORT=27017 # port mặc định của mysql
