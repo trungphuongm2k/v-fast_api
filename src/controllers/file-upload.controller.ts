@@ -40,7 +40,10 @@ export class FileUploadController {
     request: Request,
     @inject(RestBindings.Http.RESPONSE) response: Response,
   ): Promise<object> {
-    const destination = path.join(__dirname, '../../public');
+    const destination = path.join(
+      __dirname,
+      `../../${process.env.FOLDER_UPLOAD}`,
+    );
     let fileNameSave = '';
     const multerOptions: multer.Options = {
       storage: multer.diskStorage({
