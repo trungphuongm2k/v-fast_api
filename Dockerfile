@@ -1,5 +1,5 @@
 # Check out https://hub.docker.com/_/node to select a new base image
-FROM node:16.14.0
+FROM node:16.15.0
 
 # Set to a non-root built-in user `node`
 USER node
