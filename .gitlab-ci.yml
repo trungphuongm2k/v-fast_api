@@ -1,26 +1,6 @@
 stages:
-  - build
   - publish
   - deploy
-
-cache:
-  paths:
-    - node_modules/
-
-build:
-  tags:
-    - vfast
-  stage: build
-  image:
-    name: node:16.14.0
-  script:
-    - npm install
-  only:
-    - develop
-    - main
-  artifacts:
-    paths:
-      - node_modules/
 
 publish:
   tags:
@@ -58,6 +38,4 @@ deploy:
     - chmod 644 ~/.ssh/known_hosts
     - >
       ssh $K8S_MASTER_USER@$K8S_MASTER_IP -p $K8S_MASTER_PORT
-      "bash $K8S_RESTART_SCRIPT_PATH vfast vfast-api-deployment;
-      docker image prune -f;
-      docker volume prune -f;"
+      "bash $K8S_RESTART_SCRIPT_PATH vfast api-deployment;"
